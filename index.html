@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Carwash-Database-0.2</title>
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Loading -->
+    <div id="loading" class="centerBox visible">
+      <div class="typewriter">Loading . . . Please wait, your data in sync.</div>
+    </div>
+
+    <!-- Login -->
+    <div id="login" class="centerBox hidden">
+      <h1 class="title">Hello, Input your secret code</h1>
+      <input id="secret" class="textInput" type="password" placeholder="Input your code here!"/>
+      <button id="connect" class="btn">Connect</button>
+    </div>
+
+    <!-- Welcome pop -->
+    <div id="pop-welcome" class="popout hidden">
+      <div class="popInner"><div style="font-size:36px">✔</div><p>Welcome!</p></div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="centerBox hidden">
+      <div class="topRow">
+        <button id="leave" class="smallBtn">Leave</button>
+        <button id="refresh" class="smallBtn">Refresh</button>
+      </div>
+      <h1 class="title">Your Digital Dashboard</h1>
+      <p class="muted">Select Action</p>
+
+      <div class="actions">
+        <button data-tab="entry" class="actionBtn">Entry Input</button>
+        <button data-tab="db" class="actionBtn">Database</button>
+        <button data-tab="credit" class="actionBtn">Credit Info</button>
+      </div>
+
+      <!-- Entry -->
+      <div id="tab-entry" class="tabContent hidden">
+        <h2 class="smallTitle">Fill your form down below.</h2>
+
+        <div class="formRow">
+          <label>Date</label>
+          <input id="date" type="date" class="textInput"/>
+        </div>
+
+        <div class="formRow">
+          <label>Driver or PO</label>
+          <input id="driver" class="textInput" list="drivers" placeholder="choose or type manually"/>
+          <datalist id="drivers">
+            <option>Andris</option><option>Malik</option><option>Johan</option><option>Dudi</option>
+            <option>Iwan</option><option>Teddy</option><option>Kholik</option><option>Rijal</option><option>Seno</option>
+          </datalist>
+        </div>
+
+        <div class="formRow">
+          <label>Unit</label>
+          <input id="unit" class="textInput" list="units" placeholder="choose or type manually"/>
+          <datalist id="units">
+            <option>Avanza NZR</option>
+            <option>New Xenia ROK - FAU</option>
+            <option>Honda BRV BZO</option>
+            <option>Terios UKU</option>
+            <option>Veloz DFJ</option>
+            <option>Stargazer</option>
+            <option>Innova Reborn PKA - FAP</option>
+            <option>Zenix 89 WIS</option>
+            <option>Zenix 50 WIS</option>
+            <option>Zenix Hybrid NFJ</option>
+            <option>HiAce 09 WDA</option>
+          </datalist>
+        </div>
+
+        <div class="formRow">
+          <label>Payment Method</label>
+          <div class="segment">
+            <button class="segmentBtn active" data-val="Transfer">Transfer</button>
+            <button class="segmentBtn" data-val="Cash">Cash</button>
+          </div>
+        </div>
+
+        <div class="center">
+          <button id="submit" class="bigBtn">Press to Submit</button>
+        </div>
+      </div>
+
+      <!-- Database -->
+      <div id="tab-db" class="tabContent hidden">
+        <div class="topRow">
+          <button id="dbBack" class="smallBtn">Back</button>
+          <button id="dbRefresh" class="smallBtn">Refresh</button>
+        </div>
+        <h2 class="smallTitle">Database</h2>
+        <div class="filterRow">
+          <input id="filterMonth" type="month" class="textInput"/>
+          <button id="filterBtn" class="smallBtn">Search</button>
+        </div>
+        <div id="dbList" class="dbList"></div>
+        <div class="center"><div id="dbTotal" class="muted">Total: 0</div></div>
+      </div>
+
+      <!-- Credit -->
+      <div id="tab-credit" class="tabContent hidden">
+        <div class="topRow">
+          <button id="creditBack" class="smallBtn">Back</button>
+          <button id="creditRefresh" class="smallBtn">Refresh</button>
+        </div>
+        <h2 class="smallTitle">Credit Info</h2>
+        <div id="creditList" class="dbList"></div>
+      </div>
+
+      <div class="footer">
+        <img src="https://i.ibb.co.com/1fC9kY0w/IMG-5698.png" alt="logo" class="smallLogo"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- sounds -->
+  <audio id="snd-klik" src="assets/sounds/klik.mp3"></audio>
+  <audio id="snd-success" src="assets/sounds/success.mp3"></audio>
+  <audio id="snd-error" src="assets/sounds/error.mp3"></audio>
+  <audio id="snd-welcome" src="assets/sounds/welcome.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
