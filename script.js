@@ -1,5 +1,5 @@
 /* script.js - connect to Apps Script Web App */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgiw6V4BC_sMhdIBPX120VgxU-zYxUi0lmycNT1U0cyn0NKBriBwjbLKw2wnR9uphfIw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzptohZ_D7jeao4zK6wFjiBB4dDOHRnHnK9zfEMEc8b71F3HD8sFc42Ak-y2hNCXUn7JA/exec';
 
 // audio
 const audio = {
@@ -203,4 +203,5 @@ document.getElementById('refresh').addEventListener('click', ()=>{ play('klik');
 
 /* register service worker */
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }
+
 
