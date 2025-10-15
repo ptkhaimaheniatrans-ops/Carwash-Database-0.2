@@ -151,12 +151,26 @@ async function loadDatabase(monthFilter){
         return dt.getFullYear()===y && (dt.getMonth()+1)===m;
       });
     }
-    filtered.sort((a,b)=> new Date(b['Timestamp']) - new Date(a['Timestamp']));
-    if(filtered.length===0){ dbList.innerHTML='<div class="muted">No entries</div>'; dbTotal.textContent='Total: 0'; return; }
-    dbList.innerHTML='';
     filtered.forEach(r=>{
-      const item = document.createElement('div'); item.className='item';
-      item.innerHTML = `<div style="display:flex;justify-content:space-between"><div><strong>${r['Date']||''}</strong><div class="muted">${r['Driver_or_PO']||r['Driver']||''} — ${r['Unit']||''}</div></div><div class="muted">${r['Payment_Method']||r['payment']||''}</div></div>`;
+      const item = document.createElement('div'); 
+      item.className='item';
+
+      // parsing date
+      let dateStr = r['Date'] || r['Timestamp'] || '';
+      if(dateStr){
+        const d = new Date(dateStr);
+        dateStr = d.toLocaleDateString('id-ID'); // format dd/mm/yyyy
+      }
+
+      item.innerHTML = `
+        <div style="display:flex;justify-content:space-between">
+          <div>
+            <strong>${dateStr}</strong>
+            <div class="muted">${r['Driver_or_PO']||r['Driver']||''} — ${r['Unit']||''}</div>
+          </div>
+          <div class="muted">${r['Payment_Method']||r['payment']||''}</div>
+        </div>
+      `;
       if(role==='admin'){
         const actions = document.createElement('div'); actions.style.marginTop='8px';
         const edit = document.createElement('button'); edit.textContent='Edit'; edit.className='smallBtn';
@@ -176,23 +190,6 @@ async function loadDatabase(monthFilter){
 
 filterBtn.addEventListener('click', ()=> { play('klik'); loadDatabase(filterMonth.value); });
 
-/* installments */
-async function loadInstallments(){
-  const creditList = document.getElementById('creditList');
-  creditList.innerHTML = '<div class="muted">Loading...</div>';
-  try{
-    const res = await fetch(APPS_SCRIPT_URL + '?sheet=Installments');
-    const rows = await res.json();
-    creditList.innerHTML = '';
-    (rows || []).forEach(r=>{
-      const status = (String(r['Status']||'').toLowerCase().includes('paid')) ? '✔ Paid' : '✖ Unpaid';
-      const item = document.createElement('div'); item.className='item';
-      item.innerHTML = `<div><strong>${r['Month']||''}/${r['Year']||''}</strong> — ${r['Amount']||''}</div><div class="muted">${status}</div>`;
-      creditList.appendChild(item);
-    });
-  }catch(e){ creditList.innerHTML = '<div class="muted">Error</div>'; console.error(e); }
-}
-
 /* quick admin edit/delete - minimal (depends on backend support) */
 function quickEdit(row){ alert('Admin Edit: please edit directly in Google Sheets for safety.'); }
 function quickDelete(row){ if(confirm('Delete this entry?')) alert('Please delete directly in Google Sheets (or implement secure delete).'); }
@@ -203,5 +200,6 @@ document.getElementById('refresh').addEventListener('click', ()=>{ play('klik');
 
 /* register service worker */
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }
+
 
 
